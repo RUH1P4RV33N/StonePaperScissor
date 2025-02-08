@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StonePaperScissor</title>
+    <style>
+     
+        @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Press+Start+2P&display=swap');
+
+
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+
+        }
+        html{
+            min-height: 100%;
+        }
+        body{
+            background-image: url("sps.png");
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container{
+            position: absolute;
+            color: aliceblue;
+            border: solid 2px ;
+            padding: 20px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            transform: scale(0);  
+        }
+        .container.active-popup{
+            transform: scale(1) ;
+        }
+        .container h4,p,h5{
+            text-align: center;
+            padding-bottom: 40px;
+        }
+        .container h5{
+            font-size: 20px;
+        }
+        .container h1{
+            font-size: 40px;
+            text-align: center;
+            padding: 50px;
+        }
+        .container #username{
+            width: 100%;
+            height: 50px;
+            border: solid 1px black ;
+            padding-left: 10px;
+            border-radius: 40px;
+            box-shadow: 5px 5px 20px black;
+        }
+        .container .btncl{
+            padding: 20px;
+            align-items: center;
+            text-align: center;
+        }
+        .container .btn{
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 20px;
+            background-color: rgb(1, 114, 243);
+            color: beige;
+            border-color: rgba(0, 255, 255, 0);
+            font-size: bold;
+            cursor: pointer;
+        }
+
+        .game{
+            /* min-height: 90vh; */
+            text-align: center;
+            max-width: 100%;
+            overflow-x: hidden;
+            box-sizing: border-box;
+            padding: 7px;
+        }
+        .game .play{
+           
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .game .play h2{
+            font-family: "Press Start 2P", serif;
+            font-style: normal;
+            color: aliceblue;
+        }
+        .game .play div{
+            text-align: center;
+        }
+        .game h1{
+            font-family: "Press Start 2P", serif;
+            font-weight: 400;
+            font-style: normal;
+            font-size: 50px;
+            color: antiquewhite;
+        }
+        .game h2{
+            padding-top: 10px;
+            font-family: "Press Start 2P", serif;
+            color: antiquewhite;
+        }
+        .play .user,.play .comp {
+            display: flex;
+            flex-direction: column;
+        }
+        .play .user .items , .play .comp .items{
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+        .play .user .items div,.play .comp .items div{
+            margin: 0px 10px;
+        }
+        .play .user .main,.play .comp .main{
+            display: flexbox;
+            justify-content: center;
+            align-items: center;
+            /* height: 100px;
+            width: 100px; */
+        }
+        .play .user h2 , .play .comp h2{
+            padding: 40px;
+            font-size: 35px;
+            
+        }
+        .play .user .main img , .play .comp .main img{
+            flex-shrink: 0;
+            height: 250px;
+            width: 250px;
+            object-fit: cover;
+            padding-bottom: 20px;
+            border-radius: 50%;
+        }
+        .play .user .items img{
+            flex-shrink: 0;
+            min-height: 20%;
+            min-width: 20%;
+            padding: 0;
+            cursor: pointer;
+            
+
+        }
+        .play .comp .items img{
+            flex-shrink: 0;
+            min-height: 20%;
+            min-width: 20%;
+            padding: 0;
+        }
+        .play .vs{
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .play .vs img{
+            width: 150px;
+            height: 100px;
+            
+        }
+        .play .vs div input.btn{
+            font-family: "Press Start 2P", serif;
+            font-weight: 400;
+            margin-top: 40px;
+            padding: 10px;
+            border: solid 4px black;
+            cursor: pointer;
+            border-radius: 10px;
+            box-shadow: 5px 10px 30px rgba(0, 0, 0, 0.5);
+            transition: box-shadow 0.5s ease;
+        }
+        .play .vs div input.btn.active{
+            border: none;
+        }
+        .play .vs div input.btn:hover{
+            box-shadow: none;
+        }
+        .play .user .items .scissor img:hover{
+            transition: box-shadow 0.5s ease;
+            border: solid 5px rgba(0, 255, 255, 0.8)ck;
+            box-shadow: 0 0 15px 10px rgba(0, 255, 255, 0.8);
+            border-radius: 50%;
+        }
+        .play .comp .items .scs img{
+            
+            border: solid 0px rgba(0, 255, 255, 0.8);
+            box-shadow: 0 0 15px 10px rgba(0, 255, 255, 0.8);
+            border-radius: 50%;
+        }
+
+        .play .user .items .paper img:hover{
+            transition: box-shadow 0.5s ease;
+            border: solid 0px rgba(255, 232, 100, 0.885);
+            box-shadow: 0 0 15px 10px rgba(255, 232, 100, 0.885);
+            border-radius: 50%;
+        }
+        .play .comp .items .prp img{
+            box-shadow: 0 0 15px 10px rgba(255, 232, 100, 0.885); /* Creates the glow effect */
+            border: solid 0px;
+            border-radius: 50%;
+        }
+
+        .play .user .items .stone img:hover{
+            transition: box-shadow 0.5s ease;
+            border: solid 0px rgba(253, 78, 38, 0.799);
+            box-shadow: 0 0 15px 10px rgba(253, 78, 38, 0.799);
+            border-radius: 50%;
+        }
+        .play .comp .items .stn img{
+            border: solid 0px rgba(253, 78, 38, 0.799);
+            box-shadow: 0 0 15px 10px rgba(253, 78, 38, 0.799);
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+    <h1>STONE PAPER SCISSOR</h1>
+    <div class="rules">
+        <H4>Welcome Below Are The Rules <br>For The Game</H4>
+        <p>1)Stone VS Scissor = Stone <br>2)Stone VS Paper = Paper <br>3)Scissor VS Paper = Scissor
+        <br>4)Stone VS Stone = DRAW <br>5)Scissor VS Scissor = DRAW <br>6)Paper VS Paper = DRAW</p>
+    </div>  
+   
+    <h5>HIGH SCORE : <span>0</span></h5>
+    <div class="forms">
+        <input id="username" type="text" placeholder="Username">
+    </div>
+
+    <div class="btncl">
+        <button type="submit" class="btn">START</button>
+    </div>
+    </div>
+    
+    <div class="game">
+        <h1>Let's Play</h1>
+        <h2>Score: <span class="score">0</span></h2>
+        <div class="play">
+            <div class="user">
+                <h2>USER</h2>
+                
+                <div class="main">
+                    <img src="prof.avif" alt="scissor">
+                </div>
+                <div class="items">
+                    <div class="stone">
+                        <img src="stone.png" alt="scissor">
+                    </div>
+                    <div class="paper">
+                        <img src="paper.png" alt="scissor">
+                    </div>
+                    <div class="scissor">
+                        <img src="scissor.png" alt="scissor">
+                    </div>
+                </div>
+                
+            </div>
+            <div class="vs">
+                <div>
+                    <img src="vs.png" alt="vs">
+                </div>  
+                <div>
+                    <input class="btn" type="button" value="SUBMIT">
+                </div>
+            </div>
+            <div class="comp">
+                <h2>COMPUTER</h2>
+                <div class="main">
+                    <img src="rbt.png" alt="scissor">
+                </div>
+                <div class="items">
+                    <div class="item">
+                        <img src="stone.png" alt="scissor">
+                    </div>
+                    <div class="item">
+                        <img src="paper.png" alt="scissor">
+                    </div>
+                    <div class="item">
+                        <img src="scissor.png" alt="scissor">
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+<script src="script.js"></script>
+</body>
+</html>
